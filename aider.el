@@ -51,11 +51,6 @@ This function can be customized or redefined by the user."
 
 (defalias 'aider-read-string 'aider-plain-read-string)
 
-;; New function to load Doom key mappings for Aider
-(defun aider-load-doom-mappings ()
-  "Load the Doom key mappings for Aider."
-  (load-file "path/to/doom-aider.el")) ;; Update the path as necessary
-
 ;; Transient menu for Aider commands
 ;; The instruction in the autoload comment is needed, see
 ;; https://github.com/magit/transient/issues/280.
@@ -407,6 +402,11 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
   "Minor mode for Aider with keybindings."
   :lighter " Aider"
   :keymap aider-minor-mode-map)
+
+;; Let the user load Doom key mappings for Aider
+(defun aider-load-doom-mappings ()
+  "Load the Doom key mappings for Aider."
+  (load-file "doom-aider.el"))
 
 (provide 'aider)
 
