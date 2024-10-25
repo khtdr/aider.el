@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.1-rc1
+;; Version: 0.1.1-rc2
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -402,7 +402,9 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
 ;; Let the user load Doom key mappings for Aider
 (defun aider-doom-mappings ()
   "Load the Doom key mappings for Aider."
-  (load-file "doom-aider.el"))
+  (let ((file (expand-file-name "doom-aider.el"
+                                (file-name-directory (or load-file-name buffer-file-name)))))
+    (load-file file)))
 
 (provide 'aider)
 
