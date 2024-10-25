@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.19
+;; Version: 0.2.0
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -414,49 +414,56 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
 ;;;###autoload
 (defun aider-setup-doom-bindings ()
   "Set up Doom-specific keybindings for Aider in programming modes."
-
   (when (and (featurep 'evil) (fboundp 'map!))
-    (map! :leader
-          (:prefix ("l" . "aider"))) ;; First declare the prefix itself
+    ;; First declare the prefix
+    (map! :map nil
+          :leader
+          (:prefix ("l" . "aider")))
+
+    ;; Root level commands
     (map! :map aider-prog-mode-map
           :leader
           (:prefix ("l" . "aider")
+                   ))
 
-           :desc "aider-run-aider (buffer)" "r" #'aider-run-aider
-           :desc "aider-reset (clean)" "c" #'aider-reset
-           :desc "aider-exit" "x" #'aider-exit
+    ;; Submenus
+    (map! :map aider-prog-mode-map
+          :leader
+          (:prefix ("l" . "aider")
+                   (:prefix ("b" . "buffer")
+                    :desc "aider-run-aider (buffer)" "b" #'aider-run-aider
+                    :desc "aider-clear" "c" #'aider-clear
+                    :desc "aider-reset" "x" #'aider-reset
+                    :desc "aider-exit" "q" #'aider-exit)
 
-           (:prefix ("b" . "buffer")
-            :desc "aider-switch-to-buffer" "b" #'aider-switch-to-buffer
-            :desc "aider-clear" "c" #'aider-clear)
+                   (:prefix ("a" . "add")
+                    :desc "aider-add-current-file" "f" #'aider-add-current-file
+                    :desc "aider-add-files-in-current-window" "w" #'aider-add-files-in-current-window
+                    :desc "aider-batch-add-dired-marked-files" "b" #'aider-batch-add-dired-marked-files
+                    :desc "aider-repo-find-name-dired" "g" #'aider-repo-find-name-dired
+                    :desc "aider-git-repo-root-dired" "d" #'aider-git-repo-root-dired)
 
-           (:prefix ("a" . "add")
-            :desc "aider-add-current-file" "f" #'aider-add-current-file
-            :desc "aider-add-files-in-current-window" "w" #'aider-add-files-in-current-window
-            :desc "aider-batch-add-dired-marked-files" "b" #'aider-batch-add-dired-marked-files
-            :desc "aider-repo-find-name-dired" "g" #'aider-repo-find-name-dired
-            :desc "aider-git-repo-root-dired" "d" #'aider-git-repo-root-dired)
+                   (:prefix ("r" . "read")
+                    :desc "aider-read-current-file" "f" #'aider-read-current-file
+                    :desc "aider-send-line-under-cursor" "l" #'aider-send-line-under-cursor
+                    :desc "aider-send-paragraph" "p" #'aider-send-paragraph)
 
-           (:prefix ("r" . "read")
-            :desc "aider-read-current-file" "f" #'aider-read-current-file
-            :desc "aider-send-line-under-cursor" "l" #'aider-send-line-under-cursor
-            :desc "aider-send-paragraph" "p" #'aider-send-paragraph)
+                   (:prefix ("c" . "code")
+                    :desc "aider-code-change" "c" #'aider-code-change
+                    :desc "aider-region-refactor" "r" #'aider-region-refactor
+                    :desc "aider-undo-last-change" "u" #'aider-undo-last-change)
 
-           (:prefix ("c" . "code")
-            :desc "aider-code-change" "c" #'aider-code-change
-            :desc "aider-region-refactor" "r" #'aider-region-refactor
-            :desc "aider-undo-last-change" "u" #'aider-undo-last-change)
+                   (:prefix ("d" . "discussion")
+                    :desc "aider-ask-question" "a" #'aider-ask-question
+                    :desc "aider-architect-discussion" "d" #'aider-architect-discussion
+                    :desc "aider-region-explain" "r" #'aider-region-explain
+                    :desc "aider-debug-exception" "e" #'aider-debug-exception)
 
-           (:prefix ("d" . "discussion")
-            :desc "aider-ask-question" "a" #'aider-ask-question
-            :desc "aider-architect-discussion" "d" #'aider-architect-discussion
-            :desc "aider-region-explain" "r" #'aider-region-explain
-            :desc "aider-debug-exception" "e" #'aider-debug-exception)
+                   (:prefix ("o" . "other")
+                    :desc "aider-general-command" "c" #'aider-general-command
+                    :desc "aider-help" "h" #'aider-help
+                    :desc "aider-magit-show-last-commit" "g" #'aider-magit-show-last-commit)))))
 
-           (:prefix ("o" . "Other aider commands")
-            :desc "aider-general-command" "c" #'aider-general-command
-            :desc "aider-help" "h" #'aider-help
-            :desc "aider-magit-show-last-commit" "g" #'aider-magit-show-last-commit)))))
 
 ;;;###autoload
 (defun aider-maybe-enable-prog-mode ()

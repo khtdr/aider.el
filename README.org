@@ -60,7 +60,7 @@
                 (aider-minor-mode 1))))
 #+END_SRC
 
-** Doom
+*** Doom integration
 
 - Add the following code to your packages.el
 
@@ -76,6 +76,9 @@
   (setq aider-args '("--no-auto-commit" "--model" "gpt-4o-mini"))
   (setq aider-enable-doom-bindings t))
 #+END_SRC
+
+- Start with =[SPC] l b b=
+- Add files with =[SPC] l f a=
 
 * Screenshot
 
