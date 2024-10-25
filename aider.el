@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.11
+;; Version: 0.1.12
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -64,13 +64,13 @@
           :leader
           (:prefix-map ("l" . "aider")
            :desc "Aider: AI pair programming"
+           :desc "Run aider" "r" #'aider-run-aider
+           :desc "Exit aider" "q" #'aider-exit
 
            (:prefix ("b" . "Aider buffer commands")
-            :desc "Open and run aider in a dedicated buffer" "o" #'aider-run-aider
             :desc "Switch to the aider buffer" "b" #'aider-switch-to-buffer
             :desc "Clear aider output" "c" #'aider-clear
-            :desc "Reset aider" "x" #'aider-reset
-            :desc "Exit aider" "q" #'aider-exit)
+            :desc "Reset aider" "x" #'aider-reset)
 
            (:prefix ("a" . "Add file(s) to aider")
             :desc "Add current file" "f" #'aider-add-current-file
