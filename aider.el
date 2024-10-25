@@ -402,9 +402,14 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
 ;; Let the user load Doom key mappings for Aider
 (defun aider-doom-mappings ()
   "Load the Doom key mappings for Aider."
-  (let ((file (expand-file-name "doom-aider.el"
-                                (file-name-directory (or load-file-name buffer-file-name)))))
-    (load-file file)))
+  (let* ((this-file (or load-file-name
+                        (buffer-file-name)
+                        (error "Cannot determine current file path")))
+         (this-dir (file-name-directory this-file))
+         (mappings-file (expand-file-name "doom-aider.el" this-dir)))
+    (unless (file-exists-p mappings-file)
+      (error "Cannot find mappings file: %s" mappings-file))
+    (load-file mappings-file)))
 
 (provide 'aider)
 
