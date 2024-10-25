@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.0
+;; Version: 0.1.1-rc0
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -146,6 +146,11 @@ If not in a git repository, an error is raised."
   (interactive)
   (aider--send-command "/reset"))
 
+(defun aider-exit ()
+  "Send the command \"/reset\" to the Aider buffer."
+  (interactive)
+  (aider--send-command "/reset"))
+
 ;; Function to send large text (> 1024 chars) to the Aider buffer
 (defun aider--comint-send-large-string (buffer text)
   "Send large TEXT to the comint buffer in chunks of 1000 characters."
@@ -203,15 +208,6 @@ COMMAND should be a string representing the command to send."
     (let ((command (format "/read %s" (expand-file-name buffer-file-name))))
       ;; Use the shared helper function to send the command
       (aider--send-command command))))
-
-;; Function to send "/exit" to corresponding aider buffer
-(defun aider-exit ()
-  "Send the command \"/exit\" to the corresponding aider comint buffer."
-  (interactive)
-  ;; Ensure the current buffer is associated with a file
-  (if (not buffer-file-name)
-      (message "Current buffer is not associated with a file.")
-    (aider--send-command "/exit")))
 
 ;; New function to add files in all buffers in current emacs window
 (defun aider-add-files-in-current-window ()
