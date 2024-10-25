@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.17
+;; Version: 0.1.18
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -414,10 +414,15 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
 ;;;###autoload
 (defun aider-setup-doom-bindings ()
   "Set up Doom-specific keybindings for Aider in programming modes."
+
   (when (and (featurep 'evil) (fboundp 'map!))
+ (map! :leader
+          (:prefix ("l" . "aider")) ;; First declare the prefix itself
+    
     (map! :map aider-prog-mode-map
           :leader
-          (:prefix-map ("l" . "aider")
+          (:prefix ("l" . "aider")
+
            :desc "aider-run-aider (buffer)" "r" #'aider-run-aider
            :desc "aider-reset (clean)" "c" #'aider-reset
            :desc "aider-exit" "x" #'aider-exit
