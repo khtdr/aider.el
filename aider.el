@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.10
+;; Version: 0.1.11
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -65,40 +65,40 @@
           (:prefix-map ("l" . "aider")
            :desc "Aider: AI pair programming"
 
-           (:prefix ("p" . "Process commands")
-            :desc "Run Aider" "o" #'aider-run-aider
-            :desc "Switch to Aider Buffer" "z" #'aider-switch-to-buffer
-            :desc "Clear Aider" "l" #'aider-clear
-            :desc "Reset Aider" "s" #'aider-reset
-            :desc "Exit Aider" "x" #'aider-exit)
+           (:prefix ("b" . "Aider buffer commands")
+            :desc "Open and run aider in a dedicated buffer" "o" #'aider-run-aider
+            :desc "Switch to the aider buffer" "b" #'aider-switch-to-buffer
+            :desc "Clear aider output" "c" #'aider-clear
+            :desc "Reset aider" "x" #'aider-reset
+            :desc "Exit aider" "q" #'aider-exit)
 
-           (:prefix ("a" . "Adding files")
-            :desc "Add Current File" "f" #'aider-add-current-file
-            :desc "Add All Files in Current Window" "w" #'aider-add-files-in-current-window
-            :desc "Batch Add Dired Marked Files" "b" #'aider-batch-add-dired-marked-files
-            :desc "Find Files in the Git Repo" "g" #'aider-repo-find-name-dired
-            :desc "Open Git Repo Root Dired" "d" #'aider-git-repo-root-dired)
+           (:prefix ("a" . "Add file(s) to aider")
+            :desc "Add current file" "f" #'aider-add-current-file
+            :desc "Add all files in current window" "w" #'aider-add-files-in-current-window
+            :desc "Batch-add dired marked files" "b" #'aider-batch-add-dired-marked-files
+            :desc "Find files in the git repo" "g" #'aider-repo-find-name-dired
+            :desc "Open git repo root dired" "d" #'aider-git-repo-root-dired)
 
-           (:prefix ("r" . "Read-only context")
-            :desc "Send Current File" "f" #'aider-read-current-file
-            :desc "Send line under cursor" "l" #'aider-send-line-under-cursor
-            :desc "Send paragraph" "p" #'aider-send-paragraph)
+           (:prefix ("r" . "Add Read-only context")
+            :desc "Send current file as read-only context" "f" #'aider-read-current-file
+            :desc "Send line under cursor to aider" "l" #'aider-send-line-under-cursor
+            :desc "Send paragraph to aider" "p" #'aider-send-paragraph)
 
-           (:prefix ("c" . "Code change")
-            :desc "Code Change" "c" #'aider-code-change
-            :desc "Refactor Code in Selected Region" "r" #'aider-region-refactor
-            :desc "Undo Last Change" "u" #'aider-undo-last-change)
+           (:prefix ("c" . "Aider code changes")
+            :desc "Change the code" "c" #'aider-code-change
+            :desc "Refactor the code in region" "r" #'aider-region-refactor
+            :desc "Undo the last change by aider" "u" #'aider-undo-last-change)
 
-           (:prefix ("d" . "Discussion")
-            :desc "Ask Question" "a" #'aider-ask-question
-            :desc "Architect Discuss and Change" "c" #'aider-architect-discussion
-            :desc "Explain Code in Selected Region" "e" #'aider-region-explain
-            :desc "Debug Exception" "d" #'aider-debug-exception)
+           (:prefix ("d" . "Aider discussion")
+            :desc "Ask a question" "a" #'aider-ask-question
+            :desc "Discuss an architecture change" "x" #'aider-architect-discussion
+            :desc "Explain the code in region" "r" #'aider-region-explain
+            :desc "Debug an exception" "d" #'aider-debug-exception)
 
-           (:prefix ("o" . "Other")
-            :desc "General Command" "g" #'aider-general-command
+           (:prefix ("o" . "Other aider commands")
+            :desc "Send a command" "c" #'aider-general-command
             :desc "Help" "h" #'aider-help
-            :desc "Show last commit with magit" "m" #'aider-magit-show-last-commit)))))
+            :desc "Show last commit with magit" "g" #'aider-magit-show-last-commit)))))
 
 ;;;###autoload
 (defun aider-maybe-enable-prog-mode ()
