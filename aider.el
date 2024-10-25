@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.15
+;; Version: 0.1.17
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -46,66 +46,6 @@
                                    ("^\x2500+" 0 '(face nil display (space :width 2))))
   "Font lock keywords for aider buffer.")
 
-
-(defvar aider-prog-mode-map (make-sparse-keymap)
-  "Keymap for Aider commands in programming modes.")
-
-;;;###autoload
-(define-minor-mode aider-prog-mode
-  "Minor mode for Aider programming mode integration."
-  :lighter " Aider"
-  :keymap aider-prog-mode-map)
-
-;;;###autoload
-(defun aider-setup-doom-bindings ()
-  "Set up Doom-specific keybindings for Aider in programming modes."
-  (when (and (featurep 'evil) (fboundp 'map!))
-    (map! :map aider-prog-mode-map
-          :leader
-          (:prefix-map ("l" . "aider")
-           :desc "Aider: AI pair programming"
-
-           (:prefix ("b" . "Aider buffer commands")
-            :desc "Run aider" "r" #'aider-run-aider
-            :desc "Exit aider" "q" #'aider-exit
-            :desc "Switch to the aider buffer" "b" #'aider-switch-to-buffer
-            :desc "Clear aider output" "c" #'aider-clear
-            :desc "Reset aider" "x" #'aider-reset)
-
-           (:prefix ("a" . "Add file(s) to aider")
-            :desc "Add current file" "f" #'aider-add-current-file
-            :desc "Add all files in current window" "w" #'aider-add-files-in-current-window
-            :desc "Batch-add dired marked files" "b" #'aider-batch-add-dired-marked-files
-            :desc "Find files in the git repo" "g" #'aider-repo-find-name-dired
-            :desc "Open git repo root dired" "d" #'aider-git-repo-root-dired)
-
-           (:prefix ("r" . "Add Read-only context")
-            :desc "Send current file as read-only context" "f" #'aider-read-current-file
-            :desc "Send line under cursor to aider" "l" #'aider-send-line-under-cursor
-            :desc "Send paragraph to aider" "p" #'aider-send-paragraph)
-
-           (:prefix ("c" . "Aider code changes")
-            :desc "Change the code" "c" #'aider-code-change
-            :desc "Refactor the code in region" "r" #'aider-region-refactor
-            :desc "Undo the last change by aider" "u" #'aider-undo-last-change)
-
-           (:prefix ("d" . "Aider discussion")
-            :desc "Ask a question" "a" #'aider-ask-question
-            :desc "Discuss an architecture change" "x" #'aider-architect-discussion
-            :desc "Explain the code in region" "r" #'aider-region-explain
-            :desc "Debug an exception" "d" #'aider-debug-exception)
-
-           (:prefix ("o" . "Other aider commands")
-            :desc "Send a command" "c" #'aider-general-command
-            :desc "Help" "h" #'aider-help
-            :desc "Show last commit with magit" "g" #'aider-magit-show-last-commit)))))
-
-;;;###autoload
-(defun aider-maybe-enable-prog-mode ()
-  "Enable aider-prog-mode if we're in a programming mode and Doom bindings are enabled."
-  (when (and aider-enable-doom-bindings
-             (derived-mode-p 'prog-mode))
-    (aider-prog-mode 1)))
 
 (defun aider-plain-read-string (prompt &optional initial-input)
   "Read a string from the user with PROMPT and optional INITIAL-INPUT.
@@ -461,6 +401,65 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
   "Minor mode for Aider with keybindings."
   :lighter " Aider"
   :keymap aider-minor-mode-map)
+
+(defvar aider-prog-mode-map (make-sparse-keymap)
+  "Keymap for Aider commands in programming modes.")
+
+;;;###autoload
+(define-minor-mode aider-prog-mode
+  "Minor mode for Aider programming mode integration."
+  :lighter " Aider"
+  :keymap aider-prog-mode-map)
+
+;;;###autoload
+(defun aider-setup-doom-bindings ()
+  "Set up Doom-specific keybindings for Aider in programming modes."
+  (when (and (featurep 'evil) (fboundp 'map!))
+    (map! :map aider-prog-mode-map
+          :leader
+          (:prefix-map ("l" . "aider")
+           :desc "aider-run-aider (buffer)" "r" #'aider-run-aider
+           :desc "aider-reset (clean)" "c" #'aider-reset
+           :desc "aider-exit" "x" #'aider-exit
+
+           (:prefix ("b" . "buffer")
+            :desc "aider-switch-to-buffer" "b" #'aider-switch-to-buffer
+            :desc "aider-clear" "c" #'aider-clear)
+
+           (:prefix ("a" . "add")
+            :desc "aider-add-current-file" "f" #'aider-add-current-file
+            :desc "aider-add-files-in-current-window" "w" #'aider-add-files-in-current-window
+            :desc "aider-batch-add-dired-marked-files" "b" #'aider-batch-add-dired-marked-files
+            :desc "aider-repo-find-name-dired" "g" #'aider-repo-find-name-dired
+            :desc "aider-git-repo-root-dired" "d" #'aider-git-repo-root-dired)
+
+           (:prefix ("r" . "read")
+            :desc "aider-read-current-file" "f" #'aider-read-current-file
+            :desc "aider-send-line-under-cursor" "l" #'aider-send-line-under-cursor
+            :desc "aider-send-paragraph" "p" #'aider-send-paragraph)
+
+           (:prefix ("c" . "code")
+            :desc "aider-code-change" "c" #'aider-code-change
+            :desc "aider-region-refactor" "r" #'aider-region-refactor
+            :desc "aider-undo-last-change" "u" #'aider-undo-last-change)
+
+           (:prefix ("d" . "discussion")
+            :desc "aider-ask-question" "a" #'aider-ask-question
+            :desc "aider-architect-discussion" "d" #'aider-architect-discussion
+            :desc "aider-region-explain" "r" #'aider-region-explain
+            :desc "aider-debug-exception" "e" #'aider-debug-exception)
+
+           (:prefix ("o" . "Other aider commands")
+            :desc "aider-general-command" "c" #'aider-general-command
+            :desc "aider-help" "h" #'aider-help
+            :desc "aider-magit-show-last-commit" "g" #'aider-magit-show-last-commit)))))
+
+;;;###autoload
+(defun aider-maybe-enable-prog-mode ()
+  "Enable aider-prog-mode if we're in a programming mode and Doom bindings are enabled."
+  (when (and aider-enable-doom-bindings
+             (derived-mode-p 'prog-mode))
+    (aider-prog-mode 1)))
 
 (add-hook 'prog-mode-hook #'aider-maybe-enable-prog-mode)
 
