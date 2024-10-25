@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.9
+;; Version: 0.1.10
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -461,6 +461,20 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
   "Minor mode for Aider with keybindings."
   :lighter " Aider"
   :keymap aider-minor-mode-map)
+
+(add-hook 'prog-mode-hook #'aider-maybe-enable-prog-mode)
+
+;; Setup function that runs when the package loads
+(defun aider-setup ()
+  "Set up Aider package."
+  (when aider-enable-doom-bindings
+    (aider-setup-doom-bindings)))
+
+;; Run setup when package loads
+(add-hook 'after-load-functions
+          (lambda (&rest _)
+            (when (featurep 'aider)
+              (aider-setup))))
 
 (provide 'aider)
 
