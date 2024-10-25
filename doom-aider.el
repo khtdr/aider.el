@@ -15,13 +15,13 @@
        :desc "Add Current File" "f" #'aider-add-current-file
        :desc "Add All Files in Current Window" "w" #'aider-add-files-in-current-window
        :desc "Batch Add Dired Marked Files" "b" #'aider-batch-add-dired-marked-files
-       :desc "Find Files in the Git Repo" "F" #'aider-repo-find-name-dired
-       :desc "Open Git Repo Root Dired" "R" #'aider-git-repo-root-dired)
+       :desc "Find Files in the Git Repo" "g" #'aider-repo-find-name-dired
+       :desc "Open Git Repo Root Dired" "d" #'aider-git-repo-root-dired)
 
       (:prefix ("r" . "Read-only context")
        :desc "Send Current File" "f" #'aider-read-current-file
-       :desc "Send paragraph" "p" #'aider-send-paragraph
-       :desc "Send line under cursor" "n" #'aider-send-line-under-cursor)
+       :desc "Send line under cursor" "l" #'aider-send-line-under-cursor
+       :desc "Send paragraph" "p" #'aider-send-paragraph)
 
       (:prefix ("c" . "Code change")
        :desc "Code Change" "c" #'aider-code-change
@@ -30,8 +30,8 @@
 
       (:prefix ("d" . "Discussion")
        :desc "Ask Question" "a" #'aider-ask-question
+       :desc "Architect Discuss and Change" "c" #'aider-architect-discussion
        :desc "Explain Code in Selected Region" "e" #'aider-region-explain
-       :desc "Architect Discuss and Change" "t" #'aider-architect-discussion
        :desc "Debug Exception" "d" #'aider-debug-exception)
 
       (:prefix ("o" . "Other")
