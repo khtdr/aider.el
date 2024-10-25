@@ -1,7 +1,7 @@
 ;; doom-aider.el --- Keybindings for Aider using Doom Emacs conventions -*- lexical-binding: t; -*-
 
 (map! :leader
-      :prefix "a"
+      :prefix "l"
       :desc "Run Aider" "a" #'aider-run-aider
       :desc "Switch to Aider Buffer" "z" #'aider-switch-to-buffer
       :desc "Clear Aider" "l" #'aider-clear
