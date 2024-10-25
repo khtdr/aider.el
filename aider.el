@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.12
+;; Version: 0.1.13
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -63,7 +63,6 @@
     (map! :map aider-prog-mode-map
           :leader
           (:prefix-map ("l" . "aider")
-           :desc "Aider: AI pair programming"
            :desc "Run aider" "r" #'aider-run-aider
            :desc "Exit aider" "q" #'aider-exit
 
