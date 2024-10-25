@@ -60,6 +60,23 @@
                 (aider-minor-mode 1))))
 #+END_SRC
 
+** Doom
+
+- Add the following code to your packages.el
+
+#+BEGIN_SRC emacs-lisp
+(package! aider :recipe (:host github :repo "tninja/aider.el" :files ("aider.el")))
+#+END_SRC
+
+- Add the following code to your config.el
+
+#+BEGIN_SRC emacs-lisp
+(use-package aider
+  :config
+  (setq aider-args '("--model" "gpt-4o-mini"))
+  (aider-load-doom-mappings))
+#+END_SRC
+
 * Screenshot
 
 [[file:./screenshot.png]]
