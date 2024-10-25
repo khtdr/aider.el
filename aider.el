@@ -147,9 +147,9 @@ If not in a git repository, an error is raised."
   (aider--send-command "/reset"))
 
 (defun aider-exit ()
-  "Send the command \"/reset\" to the Aider buffer."
+  "Send the command \"/exit\" to the Aider buffer."
   (interactive)
-  (aider--send-command "/reset"))
+  (aider--send-command "/exit"))
 
 ;; Function to send large text (> 1024 chars) to the Aider buffer
 (defun aider--comint-send-large-string (buffer text)
@@ -400,7 +400,7 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
   :keymap aider-minor-mode-map)
 
 ;; Let the user load Doom key mappings for Aider
-(defun aider-load-doom-mappings ()
+(defun aider-doom-mappings ()
   "Load the Doom key mappings for Aider."
   (load-file "doom-aider.el"))
 
