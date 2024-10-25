@@ -63,9 +63,11 @@ This function can be customized or redefined by the user."
     ("z" "Switch to Aider Buffer" aider-switch-to-buffer)
     ("l" "Clear Aider" aider-clear)
     ("s" "Reset Aider" aider-reset)
+    ("x" "Exit Aider" aider-exit)
     ]
    ["Add file to aider"
     ("f" "Add Current File" aider-add-current-file)
+    ("o" "Read Current file " aider-read-current-file)
     ("w" "Add All Files in Current Window" aider-add-files-in-current-window)
     ("b" "Batch Add Dired Marked Files" aider-batch-add-dired-marked-files)
     ("F" "Find Files in the Git Repo" aider-repo-find-name-dired)
@@ -191,6 +193,26 @@ COMMAND should be a string representing the command to send."
       ;; Use the shared helper function to send the command
       (aider--send-command command))))
 
+;; Function to send "/read <current buffer file full path>" to corresponding aider buffer
+(defun aider-read-current-file ()
+  "Send the command \"/read <current buffer file full path>\" to the corresponding aider comint buffer."
+  (interactive)
+  ;; Ensure the current buffer is associated with a file
+  (if (not buffer-file-name)
+      (message "Current buffer is not associated with a file.")
+    (let ((command (format "/read %s" (expand-file-name buffer-file-name))))
+      ;; Use the shared helper function to send the command
+      (aider--send-command command))))
+
+;; Function to send "/exit" to corresponding aider buffer
+(defun aider-exit ()
+  "Send the command \"/exit\" to the corresponding aider comint buffer."
+  (interactive)
+  ;; Ensure the current buffer is associated with a file
+  (if (not buffer-file-name)
+      (message "Current buffer is not associated with a file.")
+    (aider--send-command "/exit")))
+
 ;; New function to add files in all buffers in current emacs window
 (defun aider-add-files-in-current-window ()
   "Add files in all buffers in the current Emacs window to the Aider buffer."
@@ -302,8 +324,8 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
                           (format "/ask in function %s, explain the following code block: %s"
                                   function-name
                                   processed-region-text)
-                          (format "/ask explain the following code block: %s"
-                                  processed-region-text)
+                        (format "/ask explain the following code block: %s"
+                                processed-region-text)
                         )))
         (aider-add-current-file)
         (aider--send-command command t))
