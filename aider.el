@@ -1,7 +1,7 @@
 ;;; aider.el --- Aider package for interactive conversation with aider -*- lexical-binding: t; -*-
 
 ;; Author: Kang Tu <tninja@gmail.com>
-;; Version: 0.1.1-rc4
+;; Version: 0.1.1-rc5
 ;; Package-Requires: ((emacs "25.1") (transient "0.3.0"))
 ;; Keywords: convenience, tools
 ;; URL: https://github.com/tninja/aider.el
@@ -384,6 +384,48 @@ The command will be formatted as \"/ask \" followed by the text from the selecte
                       (forward-paragraph)
                       (point)))))
     (aider--send-command (string-trim paragraph) t)))
+
+;;; Let Dooom users have doom keybindings
+(defun aider-doom-mappings ()
+  "Load Doom keybindings for Aider."
+  (map! :leader
+        :prefix ("l" . "aider")
+        :desc "Aider: AI pair programming"
+
+        (:prefix ("p" . "Process commands")
+         :desc "Run Aider" "o" #'aider-run-aider
+         :desc "Switch to Aider Buffer" "z" #'aider-switch-to-buffer
+         :desc "Clear Aider" "l" #'aider-clear
+         :desc "Reset Aider" "s" #'aider-reset
+         :desc "Exit Aider" "x" #'aider-exit)
+
+        (:prefix ("a" . "Adding files")
+         :desc "Add Current File" "f" #'aider-add-current-file
+         :desc "Add All Files in Current Window" "w" #'aider-add-files-in-current-window
+         :desc "Batch Add Dired Marked Files" "b" #'aider-batch-add-dired-marked-files
+         :desc "Find Files in the Git Repo" "g" #'aider-repo-find-name-dired
+         :desc "Open Git Repo Root Dired" "d" #'aider-git-repo-root-dired)
+
+        (:prefix ("r" . "Read-only context")
+         :desc "Send Current File" "f" #'aider-read-current-file
+         :desc "Send line under cursor" "l" #'aider-send-line-under-cursor
+         :desc "Send paragraph" "p" #'aider-send-paragraph)
+
+        (:prefix ("c" . "Code change")
+         :desc "Code Change" "c" #'aider-code-change
+         :desc "Refactor Code in Selected Region" "r" #'aider-region-refactor
+         :desc "Undo Last Change" "u" #'aider-undo-last-change)
+
+        (:prefix ("d" . "Discussion")
+         :desc "Ask Question" "a" #'aider-ask-question
+         :desc "Architect Discuss and Change" "c" #'aider-architect-discussion
+         :desc "Explain Code in Selected Region" "e" #'aider-region-explain
+         :desc "Debug Exception" "d" #'aider-debug-exception)
+
+        (:prefix ("o" . "Other")
+         :desc "General Command" "g" #'aider-general-command
+         :desc "Help" "h" #'aider-help
+         :desc "Show last commit with magit" "m" #'aider-magit-show-last-commit)))
 
 ;; Define the keymap for Aider Minor Mode
 (defvar aider-minor-mode-map
