@@ -4,24 +4,24 @@
       :prefix ("l" . "aider")
       :desc "Aider: AI pair programming"
 
-      (:prefix ("p" . "Aider process")
-       :desc "Run Aider" "a" #'aider-run-aider
+      (:prefix ("p" . "Process commands")
+       :desc "Run Aider" "o" #'aider-run-aider
        :desc "Switch to Aider Buffer" "z" #'aider-switch-to-buffer
        :desc "Clear Aider" "l" #'aider-clear
        :desc "Reset Aider" "s" #'aider-reset
        :desc "Exit Aider" "x" #'aider-exit)
 
-      (:prefix ("f" . "Files and Aider")
-       :desc "Add Current File" "a" #'aider-add-current-file
-       :desc "Current File read-only" "r" #'aider-add-current-file
+      (:prefix ("a" . "Adding files")
+       :desc "Add Current File" "f" #'aider-add-current-file
        :desc "Add All Files in Current Window" "w" #'aider-add-files-in-current-window
        :desc "Batch Add Dired Marked Files" "b" #'aider-batch-add-dired-marked-files
        :desc "Find Files in the Git Repo" "F" #'aider-repo-find-name-dired
        :desc "Open Git Repo Root Dired" "R" #'aider-git-repo-root-dired)
 
-      (:prefix ("a" . "Adding context")
-       :desc "Send line under cursor" "n" #'aider-send-line-under-cursor
-       :desc "Send paragraph" "p" #'aider-send-paragraph)
+      (:prefix ("r" . "Read-only context")
+       :desc "Send Current File" "f" #'aider-read-current-file
+       :desc "Send paragraph" "p" #'aider-send-paragraph
+       :desc "Send line under cursor" "n" #'aider-send-line-under-cursor)
 
       (:prefix ("c" . "Code change")
        :desc "Code Change" "c" #'aider-code-change
